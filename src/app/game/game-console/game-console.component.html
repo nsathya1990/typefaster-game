@@ -1,15 +1,15 @@
-<h3 style="text-align: center">{{ userName }}</h3>
-<form class="type-faster-form" #typeFasterForm="ngForm" (ngSubmit)="onSubmit()">
-  <div class="form-control">
-    <p>
-      {{ sentence }}
-    </p>
-  </div>
-  <h5 *ngIf="timeTaken">Time: {{ timeTaken | formattedTime }}</h5>
-  <div class="form-control">
+<h3 class="user-name">{{ userName }}</h3>
+<p class="question-text">
+  {{ sentence }}
+</p>
+<form class="type-faster-form" (ngSubmit)="onSubmit()">
+  <h5 *ngIf="timeTaken" class="time-taken-info">
+    Time: {{ timeTaken | formattedTime }}
+  </h5>
+  <div>
     <textarea
       autofocus
-      cols="50"
+      cols="75"
       rows="5"
       name="userInput"
       [disabled]="isInputAreaDisabled"
@@ -19,11 +19,11 @@
       oncontextmenu="return false"
     ></textarea>
   </div>
-  <div class="form-control">
+  <div>
     <button
       type="submit"
       [disabled]="userInput !== sentence"
-      style="width: 75px; height: 50px"
+      [ngClass]="{ 'btn-submit': true, 'btn-success': userInput === sentence }"
       *ngIf="!timeTaken"
     >
       Submit

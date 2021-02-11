@@ -9,6 +9,8 @@ export class GameConsoleComponent implements OnInit {
   @Input() userName: string;
   @Output() receivedScore = new EventEmitter<number>();
   sentencesList = [
+    'Giving directions that the mountains are to the west only works when you can see them.',
+    'Any fool can write code that a computer can understand. Good programmers write code that humans can understand. - Martin Fowler',
     'She',
     'She had the gift of being able to paint songs.',
     'Giving directions that the mountains are to the west only works when you can see them.',
@@ -32,11 +34,9 @@ export class GameConsoleComponent implements OnInit {
     this.timeStarted = new Date().getTime();
   }
 
-
   onSubmit() {
     this.isInputAreaDisabled = true;
     this.timeEnded = new Date().getTime();
-    console.log(this.userInput);
     console.log('timer stopped');
     this.timeTaken = this.timeEnded - this.timeStarted;
     console.log(this.timeTaken);

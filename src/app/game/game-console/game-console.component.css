@@ -1,13 +1,39 @@
-.type-faster-form {
-  display: flex;
-  flex-direction: column;
+:host {
+  text-align: center;
+  padding: 20%;
 }
 
-p {
+.type-faster-form {
+  padding: 10% 0;
+}
+
+.time-taken-info {
+  padding-bottom: 2%;
+}
+
+.user-name {
+  padding: 5%;
+}
+
+.question-text {
   -webkit-touch-callout: none;
   -webkit-user-select: none;
   -khtml-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
+}
+
+.btn-submit {
+  cursor: pointer;
+  border-radius: 4px;
+  padding: 6px 12px;
+  font-size: 14px;
+  border: 1px solid transparent;
+}
+
+.btn-success {
+  color: #fff;
+  background-color: #5cb85c;
+  border-color: #4cae4c;
 }
