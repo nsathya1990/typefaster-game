@@ -47,7 +47,6 @@ export class GameComponent implements OnInit {
     this.subscription = numbers.pipe(take(4)).subscribe(
       (value) => {
         this.isPlayBtnVisible = false;
-        console.log(`value is ${value}`);
         this.counter = this.timerStartValue - value;
       },
       (error) => {

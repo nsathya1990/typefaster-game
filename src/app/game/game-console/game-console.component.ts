@@ -27,7 +27,6 @@ export class GameConsoleComponent implements OnInit {
   onSubmit() {
     this.isInputAreaDisabled = true;
     this.timeEnded = new Date().getTime();
-    console.log('timer stopped');
     this.timeTaken = this.timeEnded - this.timeStarted;
     console.log(this.timeTaken);
     this.receivedScore.emit(this.timeTaken);
