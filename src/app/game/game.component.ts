@@ -4,6 +4,8 @@ import { take } from 'rxjs/operators';
 
 import User from '../models/User';
 
+import { GameService } from '../services/game.service';
+
 @Component({
   selector: 'app-game',
   templateUrl: './game.component.html',
@@ -13,7 +15,7 @@ export class GameComponent implements OnInit {
   counter: number;
   currentUser: User;
   winner: User;
-  // gameSentence: string;
+  gameSentence: string;
   subscription: Subscription;
   timerStartValue = 3;
   userCount = 0;
@@ -26,9 +28,18 @@ export class GameComponent implements OnInit {
     { name: 'User-B', timeTaken: null },
   ];
 
-  constructor() {}
+  constructor(private gameService: GameService) {}
 
   ngOnInit(): void {
+    this.gameService.getGameDetails().subscribe(
+      (respData) => {
+        this.gameSentence = respData['sentence'];
+        console.log(respData);
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
     this.currentUser = this.usersLists[this.userCount];
   }
 

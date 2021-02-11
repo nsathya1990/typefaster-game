@@ -6,19 +6,10 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
   styleUrls: ['./game-console.component.css'],
 })
 export class GameConsoleComponent implements OnInit {
+  @Input() sentence: string;
   @Input() userName: string;
   @Output() receivedScore = new EventEmitter<number>();
-  sentencesList = [
-    'Giving directions that the mountains are to the west only works when you can see them.',
-    'Any fool can write code that a computer can understand. Good programmers write code that humans can understand. - Martin Fowler',
-    'She',
-    'She had the gift of being able to paint songs.',
-    'Giving directions that the mountains are to the west only works when you can see them.',
-    'Any fool can write code that a computer can understand. Good programmers write code that humans can understand. - Martin Fowler',
-    'The most disastrous thing that you can ever learn is your first programming language. - Alan Kay',
-  ];
   isInputAreaDisabled = false;
-  sentence: string;
   userInput: string = null;
   timeStarted: number;
   timeEnded: number;
@@ -27,7 +18,6 @@ export class GameConsoleComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {
-    this.sentence = this.sentencesList[0];
     console.log('timer started');
     const date = new Date();
     console.log(new Date().getTime());

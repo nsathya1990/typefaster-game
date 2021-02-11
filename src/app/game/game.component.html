@@ -8,7 +8,7 @@
     Play
   </button>
   <h2 *ngIf="isTimerVisible">{{ counter }}</h2>
-  <app-game-console *ngIf="isGameConsoleVisible" [userName]="currentUser.name" (receivedScore)="updateScoreOfUser($event)">
+  <app-game-console *ngIf="isGameConsoleVisible" [sentence]="gameSentence" [userName]="currentUser.name" (receivedScore)="updateScoreOfUser($event)">
   </app-game-console>
   <app-result *ngIf="isGameOver" [user]="winner"></app-result>
 </div>
