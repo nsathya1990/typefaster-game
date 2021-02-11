@@ -6,11 +6,12 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class GameService {
-  private baseUrl = 'https://typefaster-9feea-default-rtdb.firebaseio.com/';
+  private baseUrl =
+    'https://typefaster-9feea-default-rtdb.firebaseio.com/game/-MTHcaGj1duw23XWPo8B.json';
 
   constructor(private httpClient: HttpClient) {}
 
   getGameDetails(): Observable<Object> {
-    return this.httpClient.get(this.baseUrl + 'game.json');
+    return this.httpClient.get(this.baseUrl);
   }
 }

@@ -15,6 +15,7 @@ export class GameComponent implements OnInit {
   counter: number;
   currentUser: User;
   winner: User;
+  usersLists: User[];
   gameSentence: string;
   subscription: Subscription;
   timerStartValue = 3;
@@ -23,24 +24,20 @@ export class GameComponent implements OnInit {
   isGameOver = false;
   isPlayBtnVisible = true;
   isTimerVisible = false;
-  usersLists = [
-    { name: 'User-A', timeTaken: null },
-    { name: 'User-B', timeTaken: null },
-  ];
 
   constructor(private gameService: GameService) {}
 
   ngOnInit(): void {
+    // get game details from the firebase api
     this.gameService.getGameDetails().subscribe(
       (respData) => {
         this.gameSentence = respData['sentence'];
         console.log(respData);
+        this.usersLists = respData['user'];
+        this.currentUser = this.usersLists[this.userCount];
       },
-      (error) => {
-        console.log(error);
-      }
+      (error) => console.error(error)
     );
-    this.currentUser = this.usersLists[this.userCount];
   }
 
   onPlay() {
