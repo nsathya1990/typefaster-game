@@ -6,15 +6,17 @@
   </div>
   <div class="form-control">
     <textarea
-      style="width: 500px; height: 200px"
-      [(ngModel)]="userInput"
+      autofocus
+      cols="50"
+      rows="5"
       name="userInput"
+      [(ngModel)]="userInput"
+      onpaste="return false"
     ></textarea>
   </div>
   <div class="form-control">
     <button
       type="submit"
-      required
       [disabled]="userInput !== sentence"
       style="width: 75px; height: 50px"
     >
