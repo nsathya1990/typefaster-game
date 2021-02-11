@@ -1,5 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { Subscription, timer } from 'rxjs';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'app-game-console',
@@ -7,6 +6,8 @@ import { Subscription, timer } from 'rxjs';
   styleUrls: ['./game-console.component.css'],
 })
 export class GameConsoleComponent implements OnInit {
+  @Input() userName: string;
+  @Output() receivedScore = new EventEmitter<number>();
   sentencesList = [
     'She',
     'She had the gift of being able to paint songs.',
@@ -42,9 +43,10 @@ export class GameConsoleComponent implements OnInit {
     this.timeEnded = new Date().getTime();
     console.log(this.userInput);
     console.log('timer stopped');
-    console.log(new Date().getTime());
     this.timeTaken = this.timeEnded - this.timeStarted;
+    console.log(this.timeTaken);
     this.display = this.transform();
+    this.receivedScore.emit(this.timeTaken);
   }
 
   onSubmitUsingEnterKey() {

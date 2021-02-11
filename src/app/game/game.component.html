@@ -8,5 +8,6 @@
     Play
   </button>
   <h2 *ngIf="isTimerVisible">{{ counter }}</h2>
-  <app-game-console *ngIf="isGameConsoleVisible"> </app-game-console>
+  <app-game-console *ngIf="isGameConsoleVisible" [user]="currentUser" (receivedScore)="updateScoreOfUser($event)">
+  </app-game-console>
 </div>

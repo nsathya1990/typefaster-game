@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Subscription, timer } from 'rxjs';
 import { take } from 'rxjs/operators';
 
+import User from '../models/User';
+
 @Component({
   selector: 'app-game',
   templateUrl: './game.component.html',
@@ -13,7 +15,12 @@ export class GameComponent implements OnInit {
   isGameConsoleVisible = false;
   isPlayBtnVisible = true;
   isTimerVisible = false;
-  private subscription: Subscription;
+  subscription: Subscription;
+  usersLists = [
+    { name: 'User-A', timeTaken: null },
+    { name: 'User-B', timeTaken: null },
+  ];
+  currentUser: User = this.usersLists[0];
 
   constructor() {}
 
@@ -39,5 +46,10 @@ export class GameComponent implements OnInit {
         console.log('completed');
       }
     );
+  }
+  updateScoreOfUser(score: number) {
+    this.currentUser.timeTaken = score;
+    console.log(this.currentUser);
+    console.log(this.usersLists);
   }
 }
