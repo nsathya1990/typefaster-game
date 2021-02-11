@@ -6,7 +6,6 @@ import { Component, OnInit, ViewChild } from '@angular/core';
   styleUrls: ['./game-console.component.css'],
 })
 export class GameConsoleComponent implements OnInit {
-  isSubmitDisabled = true;
   sentencesList = [
     'She had the gift of being able to paint songs.',
     'Giving directions that the mountains are to the west only works when you can see them.',
@@ -16,8 +15,6 @@ export class GameConsoleComponent implements OnInit {
   sentence: string;
   userInput: string = null;
 
-  @ViewChild('typeFasterForm', {static: false}) tfForm;
-
   constructor() {}
 
   ngOnInit(): void {
@@ -25,6 +22,6 @@ export class GameConsoleComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log('I am in');
+    console.log(this.userInput);
   }
 }
