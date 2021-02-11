@@ -1,10 +1,11 @@
-<h3 style="text-align: center;">{{ userName }}</h3>
+<h3 style="text-align: center">{{ userName }}</h3>
 <form class="type-faster-form" #typeFasterForm="ngForm" (ngSubmit)="onSubmit()">
   <div class="form-control">
     <p>
       {{ sentence }}
     </p>
   </div>
+  <h5 *ngIf="timeTaken">Time: {{ display }}</h5>
   <div class="form-control">
     <textarea
       autofocus
@@ -27,4 +28,3 @@
     </button>
   </div>
 </form>
-{{ display }}
