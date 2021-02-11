@@ -12,6 +12,7 @@
       cols="50"
       rows="5"
       name="userInput"
+      [disabled]="isInputAreaDisabled"
       [(ngModel)]="userInput"
       (keydown.enter)="onSubmitUsingEnterKey()"
       onpaste="return false"
@@ -23,6 +24,7 @@
       type="submit"
       [disabled]="userInput !== sentence"
       style="width: 75px; height: 50px"
+      *ngIf="!timeTaken"
     >
       Submit
     </button>

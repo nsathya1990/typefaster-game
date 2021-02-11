@@ -12,6 +12,7 @@ import User from '../models/User';
 export class GameComponent implements OnInit {
   counter: number;
   timerStartValue = 3;
+  userCount = 0;
   isGameConsoleVisible = false;
   isPlayBtnVisible = true;
   isTimerVisible = false;
@@ -24,7 +25,9 @@ export class GameComponent implements OnInit {
 
   constructor() {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.currentUser = this.usersLists[this.userCount];
+  }
 
   onPlay() {
     console.log('inside onPlay()');
@@ -47,9 +50,23 @@ export class GameComponent implements OnInit {
       }
     );
   }
+
   updateScoreOfUser(score: number) {
     this.currentUser.timeTaken = score;
     console.log(this.currentUser);
     console.log(this.usersLists);
+    // After 2 seconds, next player's turn
+    setTimeout(() => {
+      this.nextUser();
+    }, 2000);
+  }
+
+  nextUser() {
+    this.isGameConsoleVisible = false;
+    ++this.userCount;
+    if (this.userCount < this.usersLists.length) {
+      this.isPlayBtnVisible = true;
+      this.currentUser = this.usersLists[this.userCount];
+    }
   }
 }

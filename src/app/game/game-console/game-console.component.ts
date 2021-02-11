@@ -15,6 +15,7 @@ export class GameConsoleComponent implements OnInit {
     'Any fool can write code that a computer can understand. Good programmers write code that humans can understand. - Martin Fowler',
     'The most disastrous thing that you can ever learn is your first programming language. - Alan Kay',
   ];
+  isInputAreaDisabled = false;
   sentence: string;
   userInput: string = null;
   display: string;
@@ -40,6 +41,7 @@ export class GameConsoleComponent implements OnInit {
   }
 
   onSubmit() {
+    this.isInputAreaDisabled = true;
     this.timeEnded = new Date().getTime();
     console.log(this.userInput);
     console.log('timer stopped');
