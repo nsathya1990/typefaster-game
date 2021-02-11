@@ -8,6 +8,7 @@ import { Subscription, timer } from 'rxjs';
 })
 export class GameConsoleComponent implements OnInit {
   sentencesList = [
+    'She',
     'She had the gift of being able to paint songs.',
     'Giving directions that the mountains are to the west only works when you can see them.',
     'Any fool can write code that a computer can understand. Good programmers write code that humans can understand. - Martin Fowler',
@@ -42,7 +43,13 @@ export class GameConsoleComponent implements OnInit {
     console.log(this.userInput);
     console.log('timer stopped');
     console.log(new Date().getTime());
-    this.timeTaken= this.timeEnded - this.timeStarted;
+    this.timeTaken = this.timeEnded - this.timeStarted;
     this.display = this.transform();
+  }
+
+  onSubmitUsingEnterKey() {
+    if (this.userInput === this.sentence) {
+      this.onSubmit();
+    }
   }
 }
