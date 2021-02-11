@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { interval, Observable, Subscription, timer } from 'rxjs';
-import { map, take } from 'rxjs/operators';
+import { Subscription, timer } from 'rxjs';
+import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-game',
@@ -23,7 +23,6 @@ export class GameComponent implements OnInit {
     console.log('inside onPlay()');
     this.isTimerVisible = true;
     const numbers = timer(0, 1000);
-    // const takeFourNumbers = numbers.pipe(take(4));
     this.subscription = numbers.pipe(take(4)).subscribe(
       (value) => {
         this.isPlayBtnVisible = false;

@@ -1,4 +1,5 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Subscription, timer } from 'rxjs';
 
 @Component({
   selector: 'app-game-console',
@@ -14,14 +15,34 @@ export class GameConsoleComponent implements OnInit {
   ];
   sentence: string;
   userInput: string = null;
+  display: string;
+  timeStarted: number;
+  timeEnded: number;
+  timeTaken: number;
 
   constructor() {}
 
   ngOnInit(): void {
     this.sentence = this.sentencesList[0];
+    console.log('timer started');
+    const date = new Date();
+    console.log(date);
+    console.log(new Date().getTime());
+    this.timeStarted = new Date().getTime();
+  }
+
+  transform(): string {
+    const milliseconds = this.timeTaken % 1000;
+    console.log(milliseconds);
+    return (this.timeTaken - milliseconds) / 1000 + 's:' + milliseconds + 'ms';
   }
 
   onSubmit() {
+    this.timeEnded = new Date().getTime();
     console.log(this.userInput);
+    console.log('timer stopped');
+    console.log(new Date().getTime());
+    this.timeTaken= this.timeEnded - this.timeStarted;
+    this.display = this.transform();
   }
 }
