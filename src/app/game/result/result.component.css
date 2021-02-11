@@ -1,0 +1,10 @@
+:host {
+  text-align: center;
+}
+
+.result-header {
+  font-size: 40px;
+}
+.result-formatted-time {
+  padding: 10%;
+}

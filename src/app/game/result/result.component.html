@@ -1,3 +1,5 @@
-The winner is:
-<h3>{{ user.name}}</h3>
-<h5>Time: {{ user.timeTaken | formattedTime }}</h5>
+<p class="result-header">The Winner is:</p>
+<h1>{{ user.name }}</h1>
+<h4 class="result-formatted-time">
+  Time: {{ user.timeTaken | formattedTime }}
+</h4>
