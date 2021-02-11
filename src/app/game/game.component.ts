@@ -11,6 +11,7 @@ export class GameComponent implements OnInit {
   counter: number;
   timerStartValue = 3;
   isGameConsoleVisible = false;
+  isPlayBtnVisible = true;
   isTimerVisible = false;
   private subscription: Subscription;
 
@@ -22,13 +23,17 @@ export class GameComponent implements OnInit {
     console.log('inside onPlay()');
     this.isTimerVisible = true;
     const numbers = timer(0, 1000);
-    const takeFourNumbers = numbers.pipe(take(4));
-    this.subscription = takeFourNumbers.subscribe(
+    // const takeFourNumbers = numbers.pipe(take(4));
+    this.subscription = numbers.pipe(take(4)).subscribe(
       (value) => {
+        this.isPlayBtnVisible = false;
         console.log(`value is ${value}`);
         this.counter = this.timerStartValue - value;
       },
-      (error) => alert(error + 'please reload the page'),
+      (error) => {
+        this.isPlayBtnVisible = false;
+        alert(error + 'please reload the page');
+      },
       () => {
         this.isTimerVisible = false;
         this.isGameConsoleVisible = true;

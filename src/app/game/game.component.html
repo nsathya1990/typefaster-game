@@ -1,4 +1,5 @@
-<div>game works!</div>
-<button type="button" (click)="onPlay()">Play</button>
-<h2 *ngIf="isTimerVisible">{{ counter }}</h2>
-<div *ngIf="isGameConsoleVisible">TYPE THE WORDS CORRECTLY</div>
+<div class="game-console">
+  <button type="button" class="btn-play" *ngIf="isPlayBtnVisible" (click)="onPlay()">Play</button>
+  <h2 *ngIf="isTimerVisible">{{ counter }}</h2>
+  <div *ngIf="isGameConsoleVisible">TYPE THE WORDS CORRECTLY & SUBMIT</div>
+</div>
