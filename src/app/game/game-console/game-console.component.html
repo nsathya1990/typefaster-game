@@ -1,0 +1,8 @@
+<form #typeFasterForm="ngForm" (ngSubmit)="onSubmit()">
+  <p>
+    {{ sentence }}
+  </p>
+  <textarea style="width: 500px; height: 200px;" [(ngModel)]="userInput" name="userInput" ></textarea>
+  <button type="submit" required [disabled]="isSubmitDisabled" style="width: 75px; height: 50px;">Submit</button>
+  Test: 
+</form>
