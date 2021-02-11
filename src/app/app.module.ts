@@ -7,6 +7,7 @@ import { HeaderComponent } from './header/header.component';
 import { GameComponent } from './game/game.component';
 import { GameConsoleComponent } from './game/game-console/game-console.component';
 import { ResultComponent } from './game/result/result.component';
+import { FormattedTimePipe } from './pipes/formatted-time.pipe';
 
 @NgModule({
   declarations: [
@@ -14,7 +15,8 @@ import { ResultComponent } from './game/result/result.component';
     HeaderComponent,
     GameComponent,
     GameConsoleComponent,
-    ResultComponent
+    ResultComponent,
+    FormattedTimePipe
   ],
   imports: [BrowserModule, FormsModule],
   providers: [],

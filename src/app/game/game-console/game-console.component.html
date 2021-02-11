@@ -5,7 +5,7 @@
       {{ sentence }}
     </p>
   </div>
-  <h5 *ngIf="timeTaken">Time: {{ display }}</h5>
+  <h5 *ngIf="timeTaken">Time: {{ timeTaken | formattedTime }}</h5>
   <div class="form-control">
     <textarea
       autofocus

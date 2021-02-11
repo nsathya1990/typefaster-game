@@ -18,7 +18,6 @@ export class GameConsoleComponent implements OnInit {
   isInputAreaDisabled = false;
   sentence: string;
   userInput: string = null;
-  display: string;
   timeStarted: number;
   timeEnded: number;
   timeTaken: number;
@@ -29,16 +28,10 @@ export class GameConsoleComponent implements OnInit {
     this.sentence = this.sentencesList[0];
     console.log('timer started');
     const date = new Date();
-    console.log(date);
     console.log(new Date().getTime());
     this.timeStarted = new Date().getTime();
   }
 
-  transform(): string {
-    const milliseconds = this.timeTaken % 1000;
-    console.log(milliseconds);
-    return (this.timeTaken - milliseconds) / 1000 + 's:' + milliseconds + 'ms';
-  }
 
   onSubmit() {
     this.isInputAreaDisabled = true;
@@ -47,7 +40,6 @@ export class GameConsoleComponent implements OnInit {
     console.log('timer stopped');
     this.timeTaken = this.timeEnded - this.timeStarted;
     console.log(this.timeTaken);
-    this.display = this.transform();
     this.receivedScore.emit(this.timeTaken);
   }
 
