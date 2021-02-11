@@ -11,17 +11,20 @@ import User from '../models/User';
 })
 export class GameComponent implements OnInit {
   counter: number;
+  currentUser: User;
+  winner: User;
+  // gameSentence: string;
+  subscription: Subscription;
   timerStartValue = 3;
   userCount = 0;
   isGameConsoleVisible = false;
+  isGameOver = false;
   isPlayBtnVisible = true;
   isTimerVisible = false;
-  subscription: Subscription;
   usersLists = [
     { name: 'User-A', timeTaken: null },
     { name: 'User-B', timeTaken: null },
   ];
-  currentUser: User = this.usersLists[0];
 
   constructor() {}
 
@@ -67,6 +70,16 @@ export class GameComponent implements OnInit {
     if (this.userCount < this.usersLists.length) {
       this.isPlayBtnVisible = true;
       this.currentUser = this.usersLists[this.userCount];
+    } else if (this.userCount === this.usersLists.length) {
+      this.findWinner();
+      this.isGameOver = true;
     }
+  }
+
+  findWinner() {
+    this.winner = this.usersLists.reduce((prev: User, curr: User) => {
+      return prev.timeTaken < curr.timeTaken ? prev : curr;
+    });
+    console.log(this.winner);
   }
 }
