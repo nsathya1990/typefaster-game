@@ -10,7 +10,7 @@ given sentence, in the smallest amount of time, will win the game!
 
 ```shell
 git clone https://github.com/nsathya1990/typefaster-game
-cd intern-angular
+cd typefaster-game
 ```
 
 ### Install npm packages
