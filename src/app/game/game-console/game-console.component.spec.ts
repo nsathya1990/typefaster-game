@@ -1,4 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { FormsModule } from '@angular/forms';
 
 import { GameConsoleComponent } from './game-console.component';
 
@@ -8,7 +9,8 @@ describe('GameConsoleComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ GameConsoleComponent ]
+      declarations: [ GameConsoleComponent ],
+      imports: [FormsModule]
     })
     .compileComponents();
   }));
