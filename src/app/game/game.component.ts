@@ -104,10 +104,23 @@ export class GameComponent implements OnInit {
       userListObjects[this.usersLists[1].name]['timeTaken'] > 0
     ) {
       console.log('reseting');
-      this.resetResults();
+      // hard-coding for now. Change it later on
+      this.gameService
+        .resetResults({
+          'User-1': { present: false },
+          'User-2': { present: false },
+        })
+        .subscribe((response) => {
+          console.log(response);
+          this.getUserDetails(response);
+        });
+    } else {
+      this.getUserDetails(userListObjects);
     }
+  }
 
-    if (!userListObjects[this.usersLists[0].name]['present']) {
+  getUserDetails(userListObjects) {
+    if (userListObjects[this.usersLists[0].name]['present'] === false) {
       this.currentUser = this.usersLists[0];
     } else {
       this.currentUser = this.usersLists[1];
@@ -117,18 +130,5 @@ export class GameComponent implements OnInit {
         [this.currentUser.name]: { present: true },
       })
       .subscribe();
-  }
-
-  resetResults() {
-    // hard-coded for now. To be changed later on
-    const data = {
-      'User-1': {
-        present: false,
-      },
-      'User-2': {
-        present: false,
-      },
-    };
-    this.gameService.resetResults(data).subscribe();
   }
 }
