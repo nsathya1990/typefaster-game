@@ -1,6 +1,8 @@
-# TypefasterGame
+# TypefasterGame Overview
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 10.0.7.
+This is a simple multi-player game in the browser.
+The games will be played between 2 users. Who will be able to type correctly a
+given sentence, in the smallest amount of time, will win the game!
 
 ## Development server
 
