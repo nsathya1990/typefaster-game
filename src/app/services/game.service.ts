@@ -20,7 +20,10 @@ export class GameService {
   }
 
   updateUserDetails(data) {
-    console.log(data);
     return this.httpClient.patch(this.baseUrl + '/results.json', data);
+  }
+
+  resetResults(data) {
+    return this.httpClient.put(this.baseUrl + '/results.json', data);
   }
 }
