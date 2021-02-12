@@ -4,13 +4,33 @@ This is a simple multi-player game in the browser.
 The games will be played between 2 users. Who will be able to type correctly a
 given sentence, in the smallest amount of time, will win the game!
 
-## Development server
+## Get started
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+### Clone the repo
 
-## Code scaffolding
+```shell
+git clone https://github.com/nsathya1990/typefaster-game
+cd intern-angular
+```
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+### Install npm packages
+
+Install the `npm` packages described in the `package.json` and verify that it works:
+
+```shell
+npm install
+```
+
+### How to start it?
+
+The `npm start` does JIT (Jut-In_Time) compilation of the application, watches for changes to the source files, runs the application on port `4200`.
+Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+
+```shell
+npm start
+```
+
+Shut it down manually with `Ctrl-C`.
 
 ## Build
 
