@@ -48,8 +48,6 @@ The two user details including the user names (User-1 and User-2) are fetched fr
 - When the main page `http://localhost:4200/` (or) `https://typefaster-9feea.web.app/` is loaded for the first time, User-1 will become the current user.
 - When the main page is loaded for the second time, User-2 will become the current user.
 
-We are storing the state of the game in the backend by hiting the endpoint 'https://typefaster-9feea-default-rtdb.firebaseio.com/game/-MTHkr-LsriyMzXgbiYm/results.json' (PATCH)
-
 ### Caution
 
 - Once you start playing, please continue and finish your turn. If that's not done and let's say that the page is reloaded before finishing the game, then the UI will become out-of-sync with the user details stored in the backend and we may not be able to get the winner.
