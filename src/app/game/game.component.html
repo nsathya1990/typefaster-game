@@ -1,5 +1,8 @@
 <div class="game-console" *ngIf="!loader">
-  <h3 class="user-availability-info">
+  <h3
+    class="user-availability-info"
+    *ngIf="isResetBtnVisible || isPlayBtnVisible"
+  >
     {{
       isResetBtnVisible
         ? "User Slot Unavailable"

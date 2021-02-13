@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Subscription, timer } from 'rxjs';
 import { take } from 'rxjs/operators';
 
 import GameDetails from '../models/GameDetails';
+import User from '../models/User';
 
 import { GameService } from '../services/game.service';
 
@@ -27,6 +28,7 @@ export class GameComponent implements OnInit {
   isResetBtnVisible = false;
   isTimerVisible = false;
   loader = true;
+  @Output() userDetails = new EventEmitter<User>();
 
   constructor(private gameService: GameService) {}
 
@@ -64,6 +66,8 @@ export class GameComponent implements OnInit {
       .subscribe((response) => {
         console.log(response);
         this.currentUser = user;
+        // this.gameService.user$.next({ name: this.currentUser });
+        this.userDetails.emit({ name: this.currentUser });
         this.gameDetails[user] = response;
         console.log(`currentUser is ${this.currentUser}`);
         this.updateUserSlotAvailability();
@@ -117,9 +121,10 @@ export class GameComponent implements OnInit {
   }
 
   updateScoreOfUser(score: number) {
-    this.gameService
-      .setUserScore(this.currentUser, score)
-      .subscribe((data) => this.checkForAllScores());
+    this.gameService.setUserScore(this.currentUser, score).subscribe((data) => {
+      this.userDetails.emit({ name: this.currentUser, timeTaken: score });
+      this.checkForAllScores();
+    });
   }
 
   checkForAllScores(): void {
@@ -165,10 +170,12 @@ export class GameComponent implements OnInit {
   }
 
   onResetGame(): void {
-    this.gameService.resetGame(this.userLists).subscribe((gameDetails: GameDetails) => {
-      this.gameDetails = gameDetails;
-      this.isResetBtnVisible = false;
-      this.isPlayBtnVisible = true;
-    });
+    this.gameService
+      .resetGame(this.userLists)
+      .subscribe((gameDetails: GameDetails) => {
+        this.gameDetails = gameDetails;
+        this.isResetBtnVisible = false;
+        this.isPlayBtnVisible = true;
+      });
   }
 }

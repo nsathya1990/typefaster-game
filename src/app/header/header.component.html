@@ -1,3 +1,14 @@
 <header>
-  <h1>Typefaster</h1>
+  <h1 class="game-title">Typefaster</h1>
+  <h5 class="user-info">
+    <span *ngIf="!currentUser">Speed Wins! Go for it!!</span>
+    <ol *ngIf="currentUser">
+      <li>{{ currentUser.name ? currentUser.name : null }}</li>
+      <li>
+        {{
+          currentUser.timeTaken ? (currentUser.timeTaken | formattedTime) : null
+        }}
+      </li>
+    </ol>
+  </h5>
 </header>

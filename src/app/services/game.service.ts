@@ -57,7 +57,6 @@ export class GameService {
       },
     };
     userLists.forEach((userName) => (data[userName] = { present: false }));
-    console.log(data);
     return this.httpClient.patch(this.baseUrl + '.json', data);
   }
 }
