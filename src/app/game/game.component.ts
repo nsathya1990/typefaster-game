@@ -28,6 +28,7 @@ export class GameComponent implements OnInit {
   isResetBtnVisible = false;
   isTimerVisible = false;
   loader = true;
+  loaderWaitingForWinner: boolean;
   @Output() userDetails = new EventEmitter<User>();
 
   constructor(private gameService: GameService) {}
@@ -43,7 +44,6 @@ export class GameComponent implements OnInit {
         if (this.isUserSlotAvailable()) {
           console.log('user slot available');
           this.isPlayBtnVisible = true;
-          // this.getUsernameAndSave();
         } else {
           console.log('user slot not available');
           this.isResetBtnVisible = true;
@@ -66,7 +66,6 @@ export class GameComponent implements OnInit {
       .subscribe((response) => {
         console.log(response);
         this.currentUser = user;
-        // this.gameService.user$.next({ name: this.currentUser });
         this.userDetails.emit({ name: this.currentUser });
         this.gameDetails[user] = response;
         console.log(`currentUser is ${this.currentUser}`);
@@ -141,6 +140,7 @@ export class GameComponent implements OnInit {
         this.onWinnerFound(gameDetails);
       } else {
         console.log('Winnner not available yet');
+        this.loaderWaitingForWinner = true;
         setTimeout(() => {
           this.checkForAllScores();
         }, 2000);
@@ -163,10 +163,11 @@ export class GameComponent implements OnInit {
     this.winner = { name, timeTaken };
     console.log(this.winner);
     setTimeout(() => {
-      console.log('after 4 seconds displaying winner');
+      console.log('after 3 seconds displaying winner');
+      this.loaderWaitingForWinner = false;
       this.isGameConsoleVisible = false;
       this.isGameOver = true;
-    }, 4000);
+    }, 3000);
   }
 
   onResetGame(): void {

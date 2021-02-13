@@ -30,6 +30,10 @@
     (receivedScore)="updateScoreOfUser($event)"
   >
   </app-game-console>
+  <div class="waiting-for-winner-loader" *ngIf="loaderWaitingForWinner">
+    <p>waiting for the other user to complete his turn</p>
+    <app-loader></app-loader>
+  </div>
   <app-result *ngIf="isGameOver" [user]="winner"></app-result>
 </div>
 
