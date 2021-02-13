@@ -1,12 +1,12 @@
-<div class="game-console">
-  <div
-    class="available-username-info"
-    *ngIf="currentUser && (isPlayBtnVisible || isTimerVisible)"
-  >
-    {{ currentUser }}
-  </div>
+<div class="game-console" *ngIf="!loader">
   <h3 class="user-availability-info">
-    {{ isResetBtnVisible ? "User Slots Unavailable" : isPlayBtnVisible ? "User Slots Available" : null }}
+    {{
+      isResetBtnVisible
+        ? "User Slot Unavailable"
+        : isPlayBtnVisible
+        ? "User Slot Available"
+        : null
+    }}
   </h3>
   <button type="button" class="btn" *ngIf="isPlayBtnVisible" (click)="onPlay()">
     Play
@@ -29,3 +29,5 @@
   </app-game-console>
   <app-result *ngIf="isGameOver" [user]="winner"></app-result>
 </div>
+
+<app-loader *ngIf="loader"></app-loader>

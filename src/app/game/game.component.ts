@@ -26,6 +26,7 @@ export class GameComponent implements OnInit {
   isPlayBtnVisible = false;
   isResetBtnVisible = false;
   isTimerVisible = false;
+  loader = true;
 
   constructor(private gameService: GameService) {}
 
@@ -39,18 +40,19 @@ export class GameComponent implements OnInit {
         this.userLists = gameDetails['users'];
         if (this.isUserSlotAvailable()) {
           console.log('user slot available');
-          this.getUsernameAndSave();
+          this.isPlayBtnVisible = true;
+          // this.getUsernameAndSave();
         } else {
           console.log('user slot not available');
           this.isResetBtnVisible = true;
         }
+        this.loader = false;
       },
       (error) => console.error(error)
     );
   }
 
   getUsernameAndSave(): void {
-    this.isPlayBtnVisible = true;
     const availableUser = this.getUserName();
     console.log(`availableUser is ${availableUser}`);
     this.setUserAsPresent(availableUser);
@@ -99,6 +101,7 @@ export class GameComponent implements OnInit {
     this.isPlayBtnVisible = false;
     this.isTimerVisible = true;
     const numbers = timer(0, 1000);
+    this.getUsernameAndSave();
     this.subscription = numbers.pipe(take(4)).subscribe(
       (value) => {
         this.counter = this.timerStartValue - value;
@@ -166,7 +169,6 @@ export class GameComponent implements OnInit {
       this.gameDetails = gameDetails;
       this.isResetBtnVisible = false;
       this.isPlayBtnVisible = true;
-      this.getUsernameAndSave();
     });
   }
 }

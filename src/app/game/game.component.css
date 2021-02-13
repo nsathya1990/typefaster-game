@@ -6,10 +6,6 @@
   align-items: center;
 }
 
-.available-username-info {
-  padding: 5%;
-}
-
 .user-availability-info {
   flex-basis: 30%;
 }

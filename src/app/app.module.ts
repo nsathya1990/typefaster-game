@@ -9,6 +9,7 @@ import { GameComponent } from './game/game.component';
 import { GameConsoleComponent } from './game/game-console/game-console.component';
 import { ResultComponent } from './game/result/result.component';
 import { FormattedTimePipe } from './pipes/formatted-time.pipe';
+import { LoaderComponent } from './shared/loader/loader.component';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import { FormattedTimePipe } from './pipes/formatted-time.pipe';
     GameConsoleComponent,
     ResultComponent,
     FormattedTimePipe,
+    LoaderComponent,
   ],
   imports: [BrowserModule, HttpClientModule, FormsModule],
   providers: [],
