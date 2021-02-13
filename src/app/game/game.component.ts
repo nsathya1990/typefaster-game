@@ -82,7 +82,6 @@ export class GameComponent implements OnInit {
     if (userSlotUnavailable) {
       this.gameService.setSlotAsUnavailable().subscribe((response) => {
         console.log(response);
-        console.log('user slot set as unavailable');
       });
     }
   }
