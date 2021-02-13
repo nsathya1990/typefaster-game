@@ -1,4 +1,4 @@
-# TypefasterGame Overview
+# TypefasterGame (Angular) Overview
 
 This is a simple multi-player game in the browser.
 The games will be played between 2 users. Who will be able to type correctly a
