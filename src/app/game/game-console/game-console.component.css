@@ -8,6 +8,13 @@
 
 .type-faster-form textarea {
   padding: 1%;
+  width: 60vw;
+}
+
+@media screen and (min-width: 768px) {
+  .type-faster-form textarea {
+    width: 40vw;
+  }
 }
 
 .time-taken-info {

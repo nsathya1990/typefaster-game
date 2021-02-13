@@ -17,6 +17,10 @@
   text-transform: uppercase;
 }
 
+app-game-console {
+  max-width: 75vw;
+}
+
 .waiting-for-winner-loader {
   display: flex;
   flex-direction: column;
