@@ -1,9 +1,13 @@
 <div class="game-console">
-  <div class="available-username-info">
-    <span *ngIf="currentUser && (isPlayBtnVisible || isTimerVisible)">{{
-      currentUser
-    }}</span>
+  <div
+    class="available-username-info"
+    *ngIf="currentUser && (isPlayBtnVisible || isTimerVisible)"
+  >
+    {{ currentUser }}
   </div>
+  <h3 class="user-availability-info">
+    {{ isResetBtnVisible ? "User Slots Unavailable" : isPlayBtnVisible ? "User Slots Available" : null }}
+  </h3>
   <button type="button" class="btn" *ngIf="isPlayBtnVisible" (click)="onPlay()">
     Play
   </button>

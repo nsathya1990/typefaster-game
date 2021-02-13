@@ -39,9 +39,7 @@ export class GameComponent implements OnInit {
         this.userLists = gameDetails['users'];
         if (this.isUserSlotAvailable()) {
           console.log('user slot available');
-          const availableUser = this.getUserName();
-          console.log(`availableUser is ${availableUser}`);
-          this.setUserAsPresent(availableUser);
+          this.getUsernameAndSave();
         } else {
           console.log('user slot not available');
           this.isResetBtnVisible = true;
@@ -49,6 +47,13 @@ export class GameComponent implements OnInit {
       },
       (error) => console.error(error)
     );
+  }
+
+  getUsernameAndSave(): void {
+    this.isPlayBtnVisible = true;
+    const availableUser = this.getUserName();
+    console.log(`availableUser is ${availableUser}`);
+    this.setUserAsPresent(availableUser);
   }
 
   setUserAsPresent(user: string): void {
@@ -82,6 +87,7 @@ export class GameComponent implements OnInit {
   }
 
   getUserName(): string {
+    console.log(this.gameDetails);
     for (let i = 0; i < this.userLists.length; i++) {
       if (!this.gameDetails[this.userLists[i]].present) {
         return this.userLists[i];
@@ -156,10 +162,11 @@ export class GameComponent implements OnInit {
   }
 
   onResetGame(): void {
-    console.log('reset game');
-    this.gameService.resetGame(this.userLists).subscribe(() => {
+    this.gameService.resetGame(this.userLists).subscribe((gameDetails: GameDetails) => {
+      this.gameDetails = gameDetails;
       this.isResetBtnVisible = false;
       this.isPlayBtnVisible = true;
+      this.getUsernameAndSave();
     });
   }
 }

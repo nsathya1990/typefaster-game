@@ -10,6 +10,10 @@
   padding: 5%;
 }
 
+.user-availability-info {
+  flex-basis: 30%;
+}
+
 .btn {
   height: 75px;
   width: 150px;
