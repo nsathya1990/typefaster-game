@@ -14,6 +14,7 @@
   <button type="button" class="btn" *ngIf="isPlayBtnVisible" (click)="onPlay()">
     Play
   </button>
+  <app-loader *ngIf="loaderResetToPlay"></app-loader>
   <button
     type="reset"
     class="btn"

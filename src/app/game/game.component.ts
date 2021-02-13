@@ -28,7 +28,8 @@ export class GameComponent implements OnInit {
   isResetBtnVisible = false;
   isTimerVisible = false;
   loader = true;
-  loaderWaitingForWinner: boolean;
+  loaderResetToPlay = false;
+  loaderWaitingForWinner = false;
   @Output() userDetails = new EventEmitter<User>();
 
   constructor(private gameService: GameService) {}
@@ -158,12 +159,10 @@ export class GameComponent implements OnInit {
     this.gameOver(winner, gameDetails[winner].timeTaken);
   }
 
-  gameOver(name: string, timeTaken: number) {
+  gameOver(name: string, timeTaken: number): void {
     console.log('game over');
     this.winner = { name, timeTaken };
-    console.log(this.winner);
     setTimeout(() => {
-      console.log('after 3 seconds displaying winner');
       this.loaderWaitingForWinner = false;
       this.isGameConsoleVisible = false;
       this.isGameOver = true;
@@ -171,11 +170,13 @@ export class GameComponent implements OnInit {
   }
 
   onResetGame(): void {
+    this.isResetBtnVisible = false;
+    this.loaderResetToPlay = true;
     this.gameService
       .resetGame(this.userLists)
       .subscribe((gameDetails: GameDetails) => {
         this.gameDetails = gameDetails;
-        this.isResetBtnVisible = false;
+        this.loaderResetToPlay = false;
         this.isPlayBtnVisible = true;
       });
   }
