@@ -65,6 +65,11 @@ We are storing the state of the game in the backend by hiting the endpoint 'http
 - Once you load the main page on the browser, please continue and finish your turn. If that's not done and let's say that the page is reloaded before finishing the game, then the UI will become out-of-sync with the user details stored in the backend and we may not be able to get the results.
 - This will be improved upon very soon.
 
+### JSON Structure
+
+When the game begins (after reset)
+`{ "User-1": { "present": false }, "User-2": { "present": false }, "sentence": "Giving directions that the mountains are to the west only works when you can see them.", "user": [ "User-1", "User-2" ], "user-slots": { "available": true } }`
+
 ## Build
 
 Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.

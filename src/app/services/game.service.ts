@@ -29,7 +29,7 @@ export class GameService {
 
   setUserScore(user: string, score: number) {
     return this.httpClient.patch(this.baseUrl + `/${user}.json`, {
-      'timeTaken': score,
+      timeTaken: score,
     });
   }
 
@@ -46,34 +46,18 @@ export class GameService {
   setWinner(name: string, score: number) {
     return this.httpClient.patch(this.baseUrl + '/winner.json', {
       name,
-      'timeTaken': score,
+      timeTaken: score,
     });
   }
 
-  resetGame() {
-    return this.httpClient.patch(this.baseUrl + '.json', {
-      winner: null,
+  resetGame(userLists: string[]) {
+    const data = {
       'user-slots': {
         available: true,
       },
-      'User-1': {
-        present: false,
-      },
-      'User-2': {
-        present: false,
-      },
-    });
+    };
+    userLists.forEach((userName) => (data[userName] = { present: false }));
+    console.log(data);
+    return this.httpClient.patch(this.baseUrl + '.json', data);
   }
-
-  /* getScores() {
-    return this.httpClient.get(this.baseUrl + '/results.json');
-  }
-
-  updateUserDetails(data) {
-    return this.httpClient.patch(this.baseUrl + '/results.json', data);
-  }
-
-  resetResults(data) {
-    return this.httpClient.put(this.baseUrl + '/results.json', data);
-  } */
 }

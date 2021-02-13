@@ -23,13 +23,14 @@ export class GameComponent implements OnInit {
   userCount = 0;
   isGameConsoleVisible = false;
   isGameOver = false;
-  isPlayBtnVisible = true;
+  isPlayBtnVisible = false;
+  isResetBtnVisible = false;
   isTimerVisible = false;
 
   constructor(private gameService: GameService) {}
 
   ngOnInit(): void {
-    // get game details from the firebase api
+    // get game details from the firebase rest api
     this.gameService.getGameDetails().subscribe(
       (gameDetails: GameDetails) => {
         console.log(gameDetails);
@@ -43,7 +44,7 @@ export class GameComponent implements OnInit {
           this.setUserAsPresent(availableUser);
         } else {
           console.log('user slot not available');
-          // RESET & BEGIN
+          this.isResetBtnVisible = true;
         }
       },
       (error) => console.error(error)
@@ -152,5 +153,13 @@ export class GameComponent implements OnInit {
       this.isGameConsoleVisible = false;
       this.isGameOver = true;
     }, 4000);
+  }
+
+  onResetGame(): void {
+    console.log('reset game');
+    this.gameService.resetGame(this.userLists).subscribe(() => {
+      this.isResetBtnVisible = false;
+      this.isPlayBtnVisible = true;
+    });
   }
 }

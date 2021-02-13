@@ -1,14 +1,19 @@
 <div class="game-console">
   <div class="available-username-info">
-    <span *ngIf="currentUser && (isPlayBtnVisible || isTimerVisible)">{{ currentUser }}</span>
+    <span *ngIf="currentUser && (isPlayBtnVisible || isTimerVisible)">{{
+      currentUser
+    }}</span>
   </div>
-  <button
-    type="button"
-    class="btn-play"
-    *ngIf="isPlayBtnVisible"
-    (click)="onPlay()"
-  >
+  <button type="button" class="btn" *ngIf="isPlayBtnVisible" (click)="onPlay()">
     Play
+  </button>
+  <button
+    type="reset"
+    class="btn"
+    *ngIf="isResetBtnVisible"
+    (click)="onResetGame()"
+  >
+    Reset Game
   </button>
   <h2 *ngIf="isTimerVisible">{{ counter }}</h2>
   <app-game-console
