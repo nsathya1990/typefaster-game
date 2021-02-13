@@ -4,6 +4,7 @@ import { TestBed, async, ComponentFixture } from '@angular/core/testing';
 import { AppComponent } from './app.component';
 import { GameComponent } from './game/game.component';
 import { HeaderComponent } from './header/header.component';
+import { LoaderComponent } from './shared/loader/loader.component';
 
 describe('AppComponent', () => {
   let component: AppComponent;
@@ -12,7 +13,7 @@ describe('AppComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [HttpClientModule],
-      declarations: [AppComponent, HeaderComponent, GameComponent]
+      declarations: [AppComponent, HeaderComponent, GameComponent, LoaderComponent]
     }).compileComponents();
   }));
 

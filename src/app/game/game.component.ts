@@ -43,7 +43,6 @@ export class GameComponent implements OnInit {
         this.gameSentence = gameDetails['sentence'];
         this.userLists = gameDetails['users'];
         if (this.isUserSlotAvailable()) {
-          console.log('user slot available');
           this.isPlayBtnVisible = true;
         } else {
           console.log('user slot not available');

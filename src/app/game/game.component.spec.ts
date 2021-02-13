@@ -13,6 +13,7 @@ import { delay } from 'rxjs/operators';
 
 import { GameService } from '../services/game.service';
 
+import { LoaderComponent } from '../shared/loader/loader.component';
 import { GameComponent } from './game.component';
 
 describe('GameComponent', () => {
@@ -23,7 +24,7 @@ describe('GameComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [GameComponent],
+      declarations: [GameComponent, LoaderComponent],
       imports: [HttpClientTestingModule],
       providers: [GameService],
     }).compileComponents();
@@ -32,6 +33,20 @@ describe('GameComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(GameComponent);
     component = fixture.componentInstance;
+    component.userLists = ['User-1', 'User-2'];
+    component.gameDetails = <any>{
+      'User-1': {
+        present: false,
+      },
+      'User-2': {
+        present: false,
+      },
+      sentence:
+        'Giving directions that the mountains are to the west only works when you can see them.',
+      'user-slots': {
+        available: true,
+      }
+    };
     fixture.detectChanges();
   });
 
@@ -39,18 +54,17 @@ describe('GameComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it("should 'Play' button be visible on loading of the component", () => {
-    onPlayEl = fixture.debugElement.query(By.css('.btn-play'));
-    expect(onPlayEl).toBeTruthy();
+  it("should 'Play' button be not visible on loading of the component", () => {
+    onPlayEl = fixture.debugElement.query(By.css('[type="button"]'));
+    expect(onPlayEl).toBeFalsy();
   });
-
-  /* it("should 'Play' button be not visible when user clicks on 'Play'", async(() => {
-  })); */
 
   it("should call 'onPlay' function when user clicks on 'Play'", () => {
     spyOn(component, 'onPlay');
+    component.loader = false;
+    component.isPlayBtnVisible = true;
     fixture.detectChanges();
-    onPlayEl = fixture.debugElement.query(By.css('.btn-play'));
+    onPlayEl = fixture.debugElement.query(By.css('[type="button"]'));
     onPlayEl.triggerEventHandler('click', null);
     fixture.detectChanges();
     expect(component.onPlay).toHaveBeenCalled();
@@ -62,34 +76,40 @@ describe('GameComponent', () => {
   });
 
   it("should timer be visible on clicking 'Play' button", () => {
+    component.loader = false;
+    component.isPlayBtnVisible = true;
+    fixture.detectChanges();
     fixture.debugElement
-      .query(By.css('.btn-play'))
+      .query(By.css('[type="button"]'))
       .triggerEventHandler('click', null);
     fixture.detectChanges();
     timerEl = fixture.debugElement.query(By.css('h2'));
     expect(timerEl).toBeTruthy();
   });
 
-  it('should call getGameDetails (in GameService) and get user details object as response', fakeAsync(() => {
+  it("should call getGameDetails (in GameService) and get 'users' array as response", fakeAsync(() => {
     const service = fixture.debugElement.injector.get(GameService);
-    let spy_getGameDetails = spyOn(service, 'getGameDetails').and.callFake(
-      () => {
-        return Rx.of({
-          results: {
-            'User-1': { present: false },
-            'User-2': { present: false },
-          },
-          sentence:
-            'Giving directions that the mountains are to the west only works when you can see them.',
-          user: [{ name: 'User-1' }, { name: 'User-2' }],
-        }).pipe(delay(100));
-      }
-    );
+    spyOn(service, 'getGameDetails').and.callFake(() => {
+      return Rx.of({
+        'User-1': {
+          present: false,
+        },
+        'User-2': {
+          present: false,
+        },
+        sentence:
+          'Giving directions that the mountains are to the west only works when you can see them.',
+        'user-slots': {
+          available: true,
+        },
+        users: ['User-1', 'User-2'],
+      }).pipe(delay(100));
+    });
     component.ngOnInit();
     tick(100);
     expect(component.gameSentence).toEqual(
       'Giving directions that the mountains are to the west only works when you can see them.'
     );
-    expect(component.usersLists.length).toEqual(2);
+    expect(component.userLists.length).toEqual(2);
   }));
 });

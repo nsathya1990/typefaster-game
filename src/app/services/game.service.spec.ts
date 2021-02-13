@@ -12,7 +12,7 @@ describe('GameService', () => {
   let gameService: GameService;
   let httpTestingController: HttpTestingController;
   let baseUrl =
-    'https://typefaster-9feea-default-rtdb.firebaseio.com/game/-MTHkr-LsriyMzXgbiYm';
+    'https://typefaster-9feea-default-rtdb.firebaseio.com/game/-MTOa83U2r_hW8LxJbmX';
   let userDetails: Object;
   let spy: any;
 
@@ -38,10 +38,18 @@ describe('GameService', () => {
 
   it("should get game details when the function 'getGameDetails()' is called", () => {
     userDetails = {
-      results: { 'User-1': { present: false }, 'User-2': { present: false } },
+      'User-1': {
+        present: false,
+      },
+      'User-2': {
+        present: false,
+      },
       sentence:
         'Giving directions that the mountains are to the west only works when you can see them.',
-      user: [{ name: 'User-1' }, { name: 'User-2' }],
+      'user-slots': {
+        available: true,
+      },
+      users: ['User-1', 'User-2'],
     };
     let result;
     gameService.getGameDetails().subscribe((responseData) => {
@@ -54,5 +62,4 @@ describe('GameService', () => {
     req.flush([userDetails]);
     expect(result[0]).toEqual(userDetails);
   });
-
 });
