@@ -18,8 +18,6 @@ export class GameConsoleComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {
-    const date = new Date();
-    console.log(new Date().getTime());
     this.timeStarted = new Date().getTime();
   }
 
@@ -27,7 +25,6 @@ export class GameConsoleComponent implements OnInit {
     this.isInputAreaDisabled = true;
     this.timeEnded = new Date().getTime();
     this.timeTaken = this.timeEnded - this.timeStarted;
-    console.log(this.timeTaken);
     this.receivedScore.emit(this.timeTaken);
   }
 

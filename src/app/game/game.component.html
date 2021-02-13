@@ -1,6 +1,7 @@
 <div class="game-console" *ngIf="!loader">
   <h3
     class="user-availability-info"
+    [ngStyle]="{ color: isResetBtnVisible ? 'red' : 'green' }"
     *ngIf="isResetBtnVisible || isPlayBtnVisible"
   >
     {{

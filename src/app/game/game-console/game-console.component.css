@@ -6,6 +6,10 @@
   padding: 10% 0;
 }
 
+.type-faster-form textarea {
+  padding: 1%;
+}
+
 .time-taken-info {
   padding-bottom: 2%;
 }

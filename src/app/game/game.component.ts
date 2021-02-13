@@ -140,7 +140,6 @@ export class GameComponent implements OnInit {
         console.log('winner found');
         this.onWinnerFound(gameDetails);
       } else {
-        console.log('Winnner not available yet');
         this.loaderWaitingForWinner = true;
         setTimeout(() => {
           this.checkForAllScores();

@@ -122,5 +122,8 @@
       }
     }
   },
-  "defaultProject": "typefaster-game"
+  "defaultProject": "typefaster-game",
+  "cli": {
+    "analytics": false
+  }
 }
