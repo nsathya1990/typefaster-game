@@ -9,11 +9,16 @@ import { LoaderComponent } from './shared/loader/loader.component';
 describe('AppComponent', () => {
   let component: AppComponent;
   let fixture: ComponentFixture<AppComponent>;
-  
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [HttpClientModule],
-      declarations: [AppComponent, HeaderComponent, GameComponent, LoaderComponent]
+      declarations: [
+        AppComponent,
+        HeaderComponent,
+        GameComponent,
+        LoaderComponent,
+      ],
     }).compileComponents();
   }));
 
@@ -36,4 +41,12 @@ describe('AppComponent', () => {
     const compiled = fixture.debugElement.nativeElement;
     expect(compiled.querySelector('app-game')).toBeTruthy();
   }));
+
+  it("should have 'user' property of the component set when 'setUserInfo' function is called passing the user value", () => {
+    fixture = TestBed.createComponent(AppComponent);
+    component = fixture.componentInstance;
+    const user = { name: 'User-1' };
+    component.setUserInfo(user);
+    expect(component.user.name).toEqual('User-1');
+  });
 });

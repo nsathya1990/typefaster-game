@@ -78,7 +78,6 @@ export class GameComponent implements OnInit {
     const userSlotUnavailable = this.userLists.every(
       (userName) => this.gameDetails[userName].present === true
     );
-    console.log(`userSlotUnavailable: ${userSlotUnavailable}`);
     if (userSlotUnavailable) {
       this.gameService.setSlotAsUnavailable().subscribe((response) => {
         console.log(response);
