@@ -24,6 +24,7 @@
       type="submit"
       [disabled]="userInput !== sentence"
       [ngClass]="{ 'btn-submit': true, 'btn-success': userInput === sentence }"
+      [ngStyle]="{ cursor: userInput === sentence ? 'pointer' : 'not-allowed' }"
       *ngIf="!timeTaken"
     >
       Submit

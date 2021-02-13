@@ -18,7 +18,6 @@ export class GameConsoleComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {
-    console.log('timer started');
     const date = new Date();
     console.log(new Date().getTime());
     this.timeStarted = new Date().getTime();

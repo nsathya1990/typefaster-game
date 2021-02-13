@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Subscription, timer } from 'rxjs';
 import { take } from 'rxjs/operators';
 
-import User from '../models/User';
+import GameDetails from '../models/GameDetails';
 
 import { GameService } from '../services/game.service';
 
@@ -13,9 +13,10 @@ import { GameService } from '../services/game.service';
 })
 export class GameComponent implements OnInit {
   counter: number;
-  currentUser: User;
-  winner: User;
-  usersLists: User[];
+  currentUser: string;
+  gameDetails: GameDetails;
+  winner: Object;
+  userLists: string[];
   gameSentence: string;
   subscription: Subscription;
   timerStartValue = 3;
@@ -30,25 +31,72 @@ export class GameComponent implements OnInit {
   ngOnInit(): void {
     // get game details from the firebase api
     this.gameService.getGameDetails().subscribe(
-      (respData) => {
-        this.gameSentence = respData['sentence'];
-        this.usersLists = respData['user'];
-        this.getCurrentUserName(respData['results']);
+      (gameDetails: GameDetails) => {
+        console.log(gameDetails);
+        this.gameDetails = gameDetails;
+        this.gameSentence = gameDetails['sentence'];
+        this.userLists = gameDetails['users'];
+        if (this.isUserSlotAvailable()) {
+          console.log('user slot available');
+          const availableUser = this.getUserName();
+          console.log(`availableUser is ${availableUser}`);
+          this.setUserAsPresent(availableUser);
+        } else {
+          console.log('user slot not available');
+          // RESET & BEGIN
+        }
       },
       (error) => console.error(error)
     );
   }
 
+  setUserAsPresent(user: string): void {
+    this.gameService
+      .setUserAsPresent(this.getUserName())
+      .subscribe((response) => {
+        console.log(response);
+        this.currentUser = user;
+        this.gameDetails[user] = response;
+        console.log(`currentUser is ${this.currentUser}`);
+        this.updateUserSlotAvailability();
+      });
+  }
+
+  updateUserSlotAvailability(): void {
+    console.log(this.gameDetails);
+    const userSlotUnavailable = this.userLists.every(
+      (userName) => this.gameDetails[userName].present === true
+    );
+    console.log(`userSlotUnavailable: ${userSlotUnavailable}`);
+    if (userSlotUnavailable) {
+      this.gameService.setSlotAsUnavailable().subscribe((response) => {
+        console.log(response);
+        console.log('user slot set as unavailable');
+      });
+    }
+  }
+
+  isUserSlotAvailable(): boolean {
+    return this.gameDetails['user-slots'].available;
+  }
+
+  getUserName(): string {
+    for (let i = 0; i < this.userLists.length; i++) {
+      if (!this.gameDetails[this.userLists[i]].present) {
+        return this.userLists[i];
+      }
+    }
+  }
+
   onPlay() {
+    this.isPlayBtnVisible = false;
     this.isTimerVisible = true;
     const numbers = timer(0, 1000);
     this.subscription = numbers.pipe(take(4)).subscribe(
       (value) => {
-        this.isPlayBtnVisible = false;
         this.counter = this.timerStartValue - value;
       },
       (error) => {
-        this.isPlayBtnVisible = false;
         alert(error + 'please reload the page');
       },
       () => {
@@ -59,76 +107,50 @@ export class GameComponent implements OnInit {
   }
 
   updateScoreOfUser(score: number) {
-    this.currentUser.timeTaken = score;
     this.gameService
-      .updateUserDetails({
-        [this.currentUser.name]: { present: true, timeTaken: score },
-      })
-      .subscribe((data) => this.checkForScores());
+      .setUserScore(this.currentUser, score)
+      .subscribe((data) => this.checkForAllScores());
   }
 
-  checkForScores() {
-    this.gameService.getScores().subscribe((data) => {
-      const gameOver = Object.keys(data).every((element) => {
-        const user = data[element];
-        return user['present'] && user['timeTaken'] > 0;
-      });
-      console.log(`is game over: ${gameOver}`);
-      if (gameOver) {
-        this.findWinner(data);
-        this.isGameConsoleVisible = false;
-        this.isGameOver = true;
+  checkForAllScores(): void {
+    console.log('checkForAllScores');
+    let isWinnerFound = false;
+    this.gameService.getGameDetails().subscribe((gameDetails: GameDetails) => {
+      isWinnerFound = this.userLists.every(
+        (userName) =>
+          gameDetails[userName]['timeTaken'] &&
+          gameDetails[userName]['timeTaken'] > 0
+      );
+      if (isWinnerFound) {
+        console.log('winner found');
+        this.onWinnerFound(gameDetails);
       } else {
+        console.log('Winnner not available yet');
         setTimeout(() => {
-          // check for scores of the other player every 2 seconds
-          this.checkForScores();
+          this.checkForAllScores();
         }, 2000);
       }
     });
   }
 
-  findWinner(users: Object) {
-    const winner = Object.keys(users).reduce((prevEle, currEle) => {
-      const currUser = users[currEle];
-      const prevUser = users[prevEle];
-      return prevUser.timeTaken < currUser.timeTaken ? prevEle : currEle;
+  onWinnerFound(gameDetails: GameDetails) {
+    const winner = this.userLists.reduce((prevUserName, currUserName) => {
+      return gameDetails[prevUserName]['timeTaken'] <
+        gameDetails[currUserName]['timeTaken']
+        ? prevUserName
+        : currUserName;
     });
-    this.winner = { name: winner, timeTaken: users[winner].timeTaken };
+    this.gameOver(winner, gameDetails[winner].timeTaken);
   }
 
-  getCurrentUserName(userListObjects: Object) {
-    if (
-      userListObjects[this.usersLists[0].name]['present'] &&
-      userListObjects[this.usersLists[0].name]['timeTaken'] > 0 &&
-      userListObjects[this.usersLists[1].name]['present'] &&
-      userListObjects[this.usersLists[1].name]['timeTaken'] > 0
-    ) {
-      console.log('reseting');
-      // hard-coding for now. Change it later on
-      this.gameService
-        .resetResults({
-          'User-1': { present: false },
-          'User-2': { present: false },
-        })
-        .subscribe((response) => {
-          console.log(response);
-          this.getUserDetails(response);
-        });
-    } else {
-      this.getUserDetails(userListObjects);
-    }
-  }
-
-  getUserDetails(userListObjects) {
-    if (userListObjects[this.usersLists[0].name]['present'] === false) {
-      this.currentUser = this.usersLists[0];
-    } else {
-      this.currentUser = this.usersLists[1];
-    }
-    this.gameService
-      .updateUserDetails({
-        [this.currentUser.name]: { present: true },
-      })
-      .subscribe();
+  gameOver(name: string, timeTaken: number) {
+    console.log('game over');
+    this.winner = { name, timeTaken };
+    console.log(this.winner);
+    setTimeout(() => {
+      console.log('after 4 seconds displaying winner');
+      this.isGameConsoleVisible = false;
+      this.isGameOver = true;
+    }, 4000);
   }
 }
