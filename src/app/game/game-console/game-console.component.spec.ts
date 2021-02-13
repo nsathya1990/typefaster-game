@@ -40,4 +40,11 @@ describe('GameConsoleComponent', () => {
     component.onSubmitUsingEnterKey();
     expect(component.onSubmit).not.toHaveBeenCalled();
   });
+
+  it("should emit received score on calling the 'onSubmit' function", () => {
+    component.sentence = 'humty dumpty sat on a wall';
+    component.timeStarted = new Date().getTime();
+    component.onSubmit();
+    expect(component.timeTaken).toBeLessThan(component.timeStarted);
+  });
 });

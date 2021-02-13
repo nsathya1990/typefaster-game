@@ -45,7 +45,6 @@ export class GameComponent implements OnInit {
         if (this.isUserSlotAvailable()) {
           this.isPlayBtnVisible = true;
         } else {
-          console.log('user slot not available');
           this.isResetBtnVisible = true;
         }
         this.loader = false;
