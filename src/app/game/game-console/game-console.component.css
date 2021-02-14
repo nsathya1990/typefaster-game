@@ -6,6 +6,10 @@
   padding: 10% 0;
 }
 
+.user-input-blk {
+  display: inline-block;
+}
+
 .type-faster-form textarea {
   padding: 1%;
   width: 60vw;

@@ -38,7 +38,6 @@ export class GameComponent implements OnInit {
     // get game details from the firebase rest api
     this.gameService.getGameDetails().subscribe(
       (gameDetails: GameDetails) => {
-        console.log(gameDetails);
         this.gameDetails = gameDetails;
         this.gameSentence = gameDetails['sentence'];
         this.userLists = gameDetails['users'];

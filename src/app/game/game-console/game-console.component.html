@@ -6,7 +6,13 @@
   <h5 *ngIf="timeTaken" class="time-taken-info">
     Time: {{ timeTaken | formattedTime }}
   </h5>
-  <div>
+  <div class="user-input-blk">
+    <span
+      [ngStyle]="{ color: userInput !== sentence ? 'red' : 'green' }"
+      *ngIf="userInput"
+    >
+      {{ userInput !== sentence ? "Incorrect" : "Correct" }}
+    </span>
     <textarea
       autofocus
       rows="5"
