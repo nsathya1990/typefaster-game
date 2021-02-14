@@ -14,6 +14,7 @@ export class GameConsoleComponent implements OnInit {
   timeStarted: number;
   timeEnded: number;
   timeTaken: number;
+  validationMsg: string = null;
 
   constructor() {}
 
@@ -21,16 +22,20 @@ export class GameConsoleComponent implements OnInit {
     this.timeStarted = new Date().getTime();
   }
 
-  onSubmit() {
+  onSubmit(): void {
+    if (!this.isValidationSuccessful()) {
+      this.validationMsg = 'Incorrect';
+      return;
+    }
+    this.validationMsg = 'Correct';
     this.isInputAreaDisabled = true;
     this.timeEnded = new Date().getTime();
     this.timeTaken = this.timeEnded - this.timeStarted;
     this.receivedScore.emit(this.timeTaken);
   }
 
-  onSubmitUsingEnterKey() {
-    if (this.userInput === this.sentence) {
-      this.onSubmit();
-    }
+  isValidationSuccessful(): boolean {
+    const isValidated = this.userInput === this.sentence;
+    return isValidated;
   }
 }

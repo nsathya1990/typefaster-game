@@ -9,7 +9,7 @@
   <div class="user-input-blk">
     <span
       [ngStyle]="{ color: userInput !== sentence ? 'red' : 'green' }"
-      *ngIf="userInput"
+      *ngIf="validationMsg"
     >
       {{ userInput !== sentence ? "Incorrect" : "Correct" }}
     </span>
@@ -19,7 +19,7 @@
       name="userInput"
       [disabled]="isInputAreaDisabled"
       [(ngModel)]="userInput"
-      (keydown.enter)="onSubmitUsingEnterKey()"
+      (keydown.enter)="onSubmit()"
       onpaste="return false"
       oncontextmenu="return false"
     ></textarea>
@@ -27,10 +27,9 @@
   <div>
     <button
       type="submit"
-      [disabled]="userInput !== sentence"
-      [ngClass]="{ 'btn-submit': true, 'btn-success': userInput === sentence }"
-      [ngStyle]="{ cursor: userInput === sentence ? 'pointer' : 'not-allowed' }"
+      class="btn-submit"
       *ngIf="!timeTaken"
+      [ngStyle]="{backgroundColor: userInput === sentence ? '#5cb85c' : '#dfdfdf', color: userInput === sentence ? '#fff' : '#111'}"
     >
       Submit
     </button>

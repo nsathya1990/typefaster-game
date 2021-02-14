@@ -54,7 +54,6 @@ export class GameComponent implements OnInit {
 
   getUsernameAndSave(): void {
     const availableUser = this.getUserName();
-    console.log(`availableUser is ${availableUser}`);
     this.setUserAsPresent(availableUser);
   }
 
