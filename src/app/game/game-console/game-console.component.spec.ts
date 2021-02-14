@@ -25,23 +25,20 @@ describe('GameConsoleComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it("should call 'onSubmit()' function from 'onSubmitUsingEnterKey' function when userInput is equal to the given sentence", () => {
-    spyOn(component, 'onSubmit');
+  it("should 'isValidationSuccessful()' return true when user input matches with the given sentence", () => {
     component.userInput = 'She had the gift of being able to paint songs.';
     component.sentence = 'She had the gift of being able to paint songs.';
-    component.onSubmitUsingEnterKey();
-    expect(component.onSubmit).toHaveBeenCalled();
+    expect(component.isValidationSuccessful()).toBeTrue();
   });
 
-  it("should not call 'onSubmit()' function from 'onSubmitUsingEnterKey' function when userInput is not equal to the given sentence", () => {
-    spyOn(component, 'onSubmit');
+  it("should 'isValidationSuccessful()' return false when user input does not match with the given sentence", () => {
     component.userInput = 'She had the gift of being able to paint songs.';
-    component.sentence = 'She had the gift of being able to paint songs';
-    component.onSubmitUsingEnterKey();
-    expect(component.onSubmit).not.toHaveBeenCalled();
+    component.sentence = 'She had the of being';
+    expect(component.isValidationSuccessful()).toBeFalse();
   });
 
   it("should emit received score on calling the 'onSubmit' function", () => {
+    component.userInput = 'humty dumpty sat on a wall';
     component.sentence = 'humty dumpty sat on a wall';
     component.timeStarted = new Date().getTime();
     component.onSubmit();
